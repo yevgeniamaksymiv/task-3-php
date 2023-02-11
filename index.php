@@ -229,7 +229,6 @@ if (isset($_COOKIE['theme'])) {
 
 <script>
   function hideBanerOnClick() {
-    console.log('click')
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "index.php?functionPhp=hideBaner", true);
     xhttp.send();
