@@ -135,22 +135,22 @@ if (isset($_POST['birth-date'])) {
 }
 
 if (isset($_POST['theme'])) {
-    $style = $_POST['theme'];
-    setcookie('theme', $style, time() + (60 * 60 * 24 * 30));
+    $_COOKIE['theme'] = $_POST['theme'];
+    setcookie('theme', $_COOKIE['theme'], time() + (60 * 60 * 24 * 30));
+}
 
-    if ($style && $style === 'light-theme') {
+if (isset($_COOKIE['theme'])) {
+    if ($_COOKIE['theme'] === 'light-theme') {
         echo '<style>nav {
             background-color: rgb(217, 228, 238);
             }</style>';
     }
-
-    if ($style && $style === 'yellow-theme') {
+    if ($_COOKIE['theme'] === 'yellow-theme') {
         echo '<style>nav {
             background-color: rgb(240, 240, 11);
             }</style>';
     }
-
-    if ($style && $style === 'green-theme') {
+    if ($_COOKIE['theme'] === 'green-theme') {
         echo '<style>nav {
             background-color: rgb(29, 235, 22);
             }</style>';
@@ -160,7 +160,8 @@ if (isset($_POST['theme'])) {
 ?>
 
 <!-- Baner -->
-<div id="baner" class="p-4 shadow-4 rounded-3" style="background-color: hsl(0, 0%, 94%);">
+<div id="baner" class="p-4 shadow-4 rounded-3" style="background-color: hsl(0, 0%, 94%); display:none;
+">
   <h2>Baner</h2>
   <p>
     This is a simple hero unit, a simple Hero-style component for calling extra
