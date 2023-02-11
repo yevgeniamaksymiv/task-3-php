@@ -89,10 +89,34 @@ if (isset($_COOKIE['count'])) {
 setcookie('count', $_COOKIE['count'], time() + 60 * 60 * 48);
 echo "Ви відвідали наш сайт {$_COOKIE['count']} разів!" . '</br>';
 
-if (isset($_COOKIE['openDate'])) {
-    setcookie('openDate', $_COOKIE['openDate'], time() + 60 * 60 * 24 * 31);
-} else {
-    echo 'no cookie';
+if (isset($_GET['functionPhp']) && function_exists($_GET['functionPhp'])) {
+    call_user_func($_GET['functionPhp']);
+}
+
+function hideBaner()
+{
+    $hideDate = strtotime(date('Y-m-d'));
+    $openDate = date("Y-m-d", strtotime("+1 month", $hideDate));
+
+    setcookie('open-date', $openDate, time() + 60 * 60 * 24 * 31);
+}
+
+if (isset($_COOKIE['open-date'])) {
+    if ($_COOKIE['open-date'] === strtotime(date('Y-m-d'))) {
+        echo '
+        <style>
+          #baner {
+            display: block;
+          }
+        </style>
+        ';
+    } else {
+        echo '<style>
+  #baner {
+    display: none;
+  }
+  </style>';
+    }
 }
 
 function diffInDays()
@@ -160,8 +184,7 @@ if (isset($_COOKIE['theme'])) {
 ?>
 
 <!-- Baner -->
-<div id="baner" class="p-4 shadow-4 rounded-3" style="background-color: hsl(0, 0%, 94%); display:none;
-">
+<div id="baner" class="p-4 shadow-4 rounded-3" style="background-color: hsl(0, 0%, 94%);">
   <h2>Baner</h2>
   <p>
     This is a simple hero unit, a simple Hero-style component for calling extra
@@ -169,7 +192,7 @@ if (isset($_COOKIE['theme'])) {
   </p>
 
   <hr class="my-4" />
-  <button type="button" id="hide-btn" class="btn btn-outline-danger">
+  <button type="button" id="hide-btn" class="btn btn-outline-danger" onclick="hideBanerOnClick()">
     Don't show
   </button>
 </div>
@@ -204,6 +227,15 @@ if (isset($_COOKIE['theme'])) {
 </form>
 </div>
 
-<script src="js/script.js"></script>
+<script>
+  function hideBanerOnClick() {
+    console.log('click')
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "index.php?functionPhp=hideBaner", true);
+    xhttp.send();
+
+    document.getElementById('baner').style.display = 'none';
+  }
+</script>
 </body>
 </html>
