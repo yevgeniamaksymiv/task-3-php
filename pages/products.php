@@ -21,7 +21,7 @@
             <h5 class="card-title">Product 1</h5>
             <h6>Price: 100$</h6>
             <a
-              href="products-data.php?name=product-1&price=100"
+              href="<?php echo 'products-data.php?name=' . urlencode('product-1') . '&price=' . urlencode('100');?>"
               class="btn btn-primary"
               data-price="100"
               data-name="Product-1"

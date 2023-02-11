@@ -8,14 +8,21 @@
 </head>
 <body>
   <h2>Cart</h2>
-  
-  <?php 
-  session_start();
 
-  foreach ($_SESSION['names'] as $name) {
-    echo $name . '<br/>';
+  <?php
+session_start();
+
+if (isset($_SESSION['names']) && isset($_SESSION['prices'])) {
+
+    foreach ($_SESSION['names'] as $name) {
+        echo $name . '<br/>';
+    }
+    echo 'Total price: ' . array_sum($_SESSION['prices']) . ' $' . '<br/>';
+} else {
+    echo 'Cart is empty' . '<br/>';
 }
-echo 'Total price: ' . array_sum($_SESSION['prices']) . ' $';
-  ?>
+
+echo '<a href="products.php">Back to shopping</a>';
+?>
 </body>
 </html>
