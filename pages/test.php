@@ -13,9 +13,13 @@
   <?php
 session_start();
 
-echo $_SESSION['test'] . '</br>';
-echo $_SESSION['country'] . '</br>';
+if (isset($_SESSION['test'])) {
+  echo $_SESSION['test'] . '</br>';
+}
 
+if (isset($_SESSION['country'])) {
+  echo $_SESSION['country'] . '</br>';
+}
 ?>
 <form class="mt-4" action="" method="post">
   <div class="mb-3">
@@ -37,7 +41,13 @@ echo $_SESSION['country'] . '</br>';
     id="email" 
     placeholder="Enter email" 
     name="email" 
-    value="<?php echo $_SESSION['email'];?>">
+    value="
+<?php
+if (isset($_SESSION['email'])) {
+    echo $_SESSION['email'];
+}
+?>
+">
 </div>
   <button class="btn btn-primary mt-3">Submit</button>
 </form>

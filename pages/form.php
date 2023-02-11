@@ -8,36 +8,47 @@
   <title>Document</title>
 </head>
 <body>
-  <?php
-  session_start();
-  ?>
+<?php
+session_start();
+?>
   <div class="container">
     <form class="mt-4" action="" method="post">
       <div class="mb-3">
         <label for="name" class="form-label text-primary">Name</label>
-        <input type="text" 
-          class="form-control" 
-          id="name" 
-          placeholder="Enter name" 
+        <input type="text"
+          class="form-control"
+          id="name"
+          placeholder="Enter name"
           name="name">
       </div>
       <div class="mb-3">
         <label for="country" class="form-label text-primary">Country</label>
-        <input type="text" 
-          class="form-control" 
-          id="country" 
-          placeholder="Enter country" 
+        <input type="text"
+          class="form-control"
+          id="country"
+          placeholder="Enter country"
           name="country"
-          value="<?php echo $_SESSION['country'];?>">
+          value="
+<?php
+if (isset($_SESSION['country'])) {
+    echo $_SESSION['country'];
+}
+?>"
+          >
       </div>
       <div class="mb-3">
         <label for="age" class="form-label text-primary">Age</label>
-        <input type="text" 
-          class="form-control" 
-          id="age" 
-          placeholder="Enter age" 
+        <input type="text"
+          class="form-control"
+          id="age"
+          placeholder="Enter age"
           name="age"
-          value="<?php echo $_SESSION['age'];?>">
+          value="
+<?php
+if (isset($_SESSION['age'])) {
+    echo $_SESSION['age'];
+}
+?>">
       </div>
       <button class="btn btn-primary mt-3">Submit</button>
     </form>
