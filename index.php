@@ -137,24 +137,26 @@ if (!isset($_COOKIE['first-visit'])) {
     $_COOKIE['first-visit'] = date('Y-m-d');
 }
 
-function diffBirthDate()
+function diffBirthDate($userDate)
 {
-    $date = explode('-', $_POST['birth-date']);
-    $birthday = mktime(0, 0, 0, $date[1], $date[2], $date[0]);
+    $birthday = strtotime($userDate);
     $today = time();
-    $diffDays = ($birthday - $today);
-    $days = (int) ($diffDays / 86400);
-    return $days;
+    $birthYearToCurrent = date_create(date("Y", $today) . "-" . date("m", $birthday) . "-" . date("d", $birthday));
+
+    $diff = date_diff(date_create(date("d-m-Y", $today)), $birthYearToCurrent);
+    $days = $diff->format("%R%a");
+
+    return ((int) $days < 0) ? 365 + $days : abs($days);
 }
 
 if (isset($_POST['birth-date'])) {
     $_COOKIE['birth-date'] = $_POST['birth-date'];
     setcookie('birth-date', $_COOKIE['birth-date'], time() + 60 * 60 * 24 * 30 * 12);
-    $diff = diffBirthDate();
-    if ($diff === 0) {
+    $diffDays = diffBirthDate($_COOKIE['birth-date']);
+    if ($diffDays == 0) {
         echo 'Happy birthday to you!';
     } else {
-        echo "{$diff} days left for your birthday";
+        echo "{$diffDays} days left for your birthday";
     }
 }
 
